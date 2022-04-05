@@ -1,18 +1,25 @@
+/**
+ * Author: Quoc Duy Nguyen
+ * NetID: qnguy12
+ * Assignment: Project 3
+ * 
+ * Note: Add in checking score
+ */
+
 import java.awt.Graphics; import java.awt.Color; import java.awt.Component;
 import java.awt.Font; import java.awt.Dimension;
 import java.awt.BorderLayout; import java.awt.GridLayout;
 import java.awt.event.MouseListener; import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener; import java.awt.event.ActionEvent;
 import javax.swing.JFrame; import javax.swing.JPanel;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.border.EmptyBorder;
+import javax.swing.Action; import javax.swing.Box;
+import javax.swing.BoxLayout; import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel; import javax.swing.JButton;
 
 public class TicTacToes extends JFrame {
     int[] scores = new int[3]; //P1 wins, P2 wins, draws
     JLabel[] scoreBoardLabel = new JLabel[3]; //P1 wins, P2 wins, draws
+    JLabel winnerLabel = new JLabel("In Progress");
     String nextMove = "X";
     TicTacToes() {
         setMinimumSize(new Dimension(480,580));
@@ -44,7 +51,6 @@ public class TicTacToes extends JFrame {
             }
         };
         winnerPanel.setLayout(new GridLayout(3,1));
-        JLabel winnerLabel = new JLabel("In Progress");
         winnerPanel.add(new JLabel(" "));
         winnerPanel.add(winnerLabel);
         winnerLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -105,6 +111,8 @@ public class TicTacToes extends JFrame {
                 labels[i].addActionListener(new ActionListener() {
                     @Override public void actionPerformed(ActionEvent e){
                         ((JButton)e.getSource()).setText(nextMove);
+                        scores[0]++;
+                        scoreBoardLabel[0].setText("P1 wins: " + scores[0]);
                         nextMove = (nextMove.equals("X"))? "O" : "X";
                     }
                 });
@@ -127,9 +135,6 @@ public class TicTacToes extends JFrame {
         public void reset() {
             for (JButton label : labels)
                 label.setText("");
-        }
-        public void setLabel(int index, String text) {
-            labels[index].setText(text);
         }
     }
 }
